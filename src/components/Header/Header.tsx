@@ -1,79 +1,61 @@
 import './assets/styles.scss';
-import { Component, FormEvent, MouseEvent, ChangeEvent } from 'react';
-import { HeaderProps } from './types';
-import { connect } from 'react-redux';
+import { type JSX, FormEvent, MouseEvent, ChangeEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   setSearch,
   getWeatherByCoords,
   getWeather,
   RootState,
+  AppDispatch
 } from '../../store';
 
-class _Header extends Component<HeaderProps> {
-  constructor(props: HeaderProps) {
-    super(props);
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
-  }
+export default function Header(): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
+  const { search } = useSelector((state: RootState) => state.weatherData);
 
-  handleOnSubmit(
+  const handleSubmit = (
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
-  ): void {
+  ): void => {
     e.preventDefault();
-    this.props.getWeather(this.props.search);
-  }
+    dispatch(getWeather(search));
+  };
 
-  handleOnClick(e: MouseEvent<HTMLButtonElement>): void {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    dispatch(setSearch(e.target.value));
+  };
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     const successCallback = async (position: {
-      coords: { latitude: number; longitude: number };
+      coords: { latitude: number; longitude: number; };
     }): Promise<void> => {
       const { latitude, longitude } = await position.coords;
-      this.props.getWeatherByCoords({ lat: latitude, lon: longitude });
+      dispatch(getWeatherByCoords({ lat: latitude, lon: longitude }));
     };
 
     navigator.geolocation.getCurrentPosition(successCallback);
-  }
-
-  handleOnChange(e: ChangeEvent<HTMLInputElement>): void {
-    this.props.setSearch(e.target.value);
-  }
-
-  render(): JSX.Element {
-    return (
-      <header className="header">
-        <div className="header-left">
-          <div className="header-logo">Weatherly</div>
-        </div>
-        <div className="header-right">
-          <button onClick={this.handleOnClick} className="btn crosshair">
-            <i className="fa-solid fa-location-crosshairs"></i>
-          </button>
-          <form className="header-search-form" onSubmit={this.handleOnSubmit}>
-            <input
-              onChange={this.handleOnChange}
-              type="search"
-              placeholder="Enter city/town name"
-            />
-            <button onClick={this.handleOnSubmit} className="btn glass">
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </form>
-        </div>
-      </header>
-    );
-  }
-}
-
-const mapStateToProps = ({ weatherData }: RootState): { search: string } => {
-  return {
-    search: weatherData.search,
   };
-};
 
-export const Header = connect(mapStateToProps, {
-  setSearch,
-  getWeatherByCoords,
-  getWeather,
-})(_Header);
+  return (
+    <header className="header">
+      <div className="header-left">
+        <div className="header-logo">Weatherly</div>
+      </div>
+      <div className="header-right">
+        <button onClick={handleClick} className="btn crosshair">
+          <i className="fa-solid fa-location-crosshairs"></i>
+        </button>
+        <form className="header-search-form" onSubmit={handleSubmit}>
+          <input
+            onChange={handleChange}
+            type="search"
+            placeholder="Enter city/town name"
+          />
+          <button onClick={handleSubmit} className="btn glass">
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+    </header>
+  );
+}

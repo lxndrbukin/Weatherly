@@ -18,6 +18,28 @@ body {
   align-items: center;
 }
 
+section {
+  width: 100%;
+  max-width: $max-width;
+  background-color: $white;
+  border-radius: 20px;
+  margin: $spacing-lg 0;
+  padding: $spacing-lg;
+  box-sizing: border-box;
+  box-shadow: $shadow;
+  animation-name: opacity;
+  animation-duration: 1.5s;
+  display: flex;
+  flex-direction: column;
+
+  h4 {
+    padding: $spacing-sm;
+    font-size: 1.5rem;
+    margin: $spacing-sm;
+    color: $grey;
+  }
+}
+
 /* ANIMATIONS */
 @keyframes opacity {
   0% {

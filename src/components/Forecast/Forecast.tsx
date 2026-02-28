@@ -1,13 +1,12 @@
 import './assets/styles.scss';
-
 import { Component } from 'react';
 import { ForecastProps } from './types';
-import { Day } from '../Day/Day';
+import Day from '../Day/Day';
 
 export class Forecast extends Component<ForecastProps> {
-  days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  days = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
 
-  constructor(props: ForecastProps) {
+  constructor (props: ForecastProps) {
     super(props);
     this.renderDays = this.renderDays.bind(this);
   }
@@ -19,9 +18,9 @@ export class Forecast extends Component<ForecastProps> {
         return (
           <Day
             key={dayNum}
-            day={this.days[dayNum]}
-            icon={time.weather[0].icon}
-            description={time.weather[0].description}
+            day={this.days[ dayNum ]}
+            icon={time.weather[ 0 ].icon}
+            description={time.weather[ 0 ].description}
             main={time.main}
           />
         );

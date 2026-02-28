@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Slices, State, WeatherProps } from './types';
-import { getWeather } from '../thunks/getWeather';
-import { getWeatherByCoords } from '../thunks/getWeatherByCoords';
+import { Slices, type State, type WeatherProps } from './types';
+import { getWeather, getWeatherByCoords } from '../thunks/getWeather';
 
 const initialState: State = {
   weather: {

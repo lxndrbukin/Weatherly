@@ -14,4 +14,3 @@ export * from './slices/types';
 export * from './thunks/types';
 export * from './slices/weatherSlice';
 export * from './thunks/getWeather';
-export * from './thunks/getWeatherByCoords';
