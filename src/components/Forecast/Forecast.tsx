@@ -1,24 +1,22 @@
 import './assets/styles.scss';
-import { Component } from 'react';
-import { ForecastProps } from './types';
+import { type JSX } from 'react';
+import { useSelector } from 'react-redux';
+import { type RootState } from '../../store';
 import Day from '../Day/Day';
 
-export class Forecast extends Component<ForecastProps> {
-  days = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
+export default function Forecast(): JSX.Element {
+  const days = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
 
-  constructor (props: ForecastProps) {
-    super(props);
-    this.renderDays = this.renderDays.bind(this);
-  }
+  const { list } = useSelector((state: RootState) => state.weatherData.weather.forecast!);
 
-  renderDays(): Array<JSX.Element | null> {
-    return this.props.list.map((time): JSX.Element | null => {
+  const renderDays = (): Array<JSX.Element | null> => {
+    return list.map((time): JSX.Element | null => {
       if (time.dt_txt.includes('12:00:00')) {
         const dayNum = new Date(time.dt * 1000).getDay();
         return (
           <Day
             key={dayNum}
-            day={this.days[ dayNum ]}
+            day={days[ dayNum ]}
             icon={time.weather[ 0 ].icon}
             description={time.weather[ 0 ].description}
             main={time.main}
@@ -27,14 +25,12 @@ export class Forecast extends Component<ForecastProps> {
       }
       return null;
     });
-  }
+  };
 
-  render(): JSX.Element {
-    return (
-      <section className="forecast">
-        <h4 className="forecast-header">5-day forecast</h4>
-        <div className="forecast-days">{this.renderDays()}</div>
-      </section>
-    );
-  }
+  return (
+    <section className="forecast">
+      <h4 className="forecast-header">5-day forecast</h4>
+      <div className="forecast-days">{renderDays()}</div>
+    </section>
+  );
 }

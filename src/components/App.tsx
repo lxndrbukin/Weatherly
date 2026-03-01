@@ -4,12 +4,13 @@ import { useSelector } from 'react-redux';
 import { type RootState } from '../store';
 import Header from './Header/Header';
 import CurrentWeather from './CurrentWeather/CurrentWeather';
-import { Forecast } from './Forecast/Forecast';
+import Forecast from './Forecast/Forecast';
 import Footer from './Footer/Footer';
-// import Summary from './Summary/Summary';
+import Summary from './Summary/Summary';
 
 export default function App(): JSX.Element {
-  const { loading, weather } = useSelector((state: RootState) => state.weatherData);
+  const { loading, weather, summaryLoading } = useSelector((state: RootState) => state.weatherData);
+  const { current, forecast } = weather;
 
   const currentWeather = (): JSX.Element | null => {
     const { current } = weather;
@@ -24,20 +25,12 @@ export default function App(): JSX.Element {
     return null;
   };
 
-  const forecast = (): JSX.Element | null => {
-    const { forecast } = weather;
-    if (forecast) {
-      return <Forecast list={forecast.list} />;
-    }
-    return null;
-  };
-
   return (
     <div className="container">
       <Header />
-      {loading && currentWeather()}
-      {loading && forecast()}
-      {/* <Summary /> */}
+      {!loading && currentWeather()}
+      {!loading && forecast && <Forecast />}
+      {current && (summaryLoading || weather.summary) && <Summary />}
       <Footer />
     </div>
   );

@@ -1,14 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Slices, type State, type WeatherProps } from './types';
-import { getWeather, getWeatherByCoords } from '../thunks/getWeather';
+import { getWeather, getSummary } from '../thunks/getWeather';
 
 const initialState: State = {
   weather: {
     current: null,
     forecast: null,
+    summary: null
   },
   search: '',
   loading: false,
+  summaryLoading: false,
 };
 
 const weatherSlice = createSlice({
@@ -22,6 +24,7 @@ const weatherSlice = createSlice({
   extraReducers: (builder): void => {
     builder.addCase(getWeather.pending, (state: State): void => {
       state.loading = true;
+      state.summaryLoading = true;
     });
     builder.addCase(
       getWeather.fulfilled,
@@ -30,14 +33,11 @@ const weatherSlice = createSlice({
         state.weather = { ...action.payload };
       }
     );
-    builder.addCase(getWeatherByCoords.pending, (state: State): void => {
-      state.loading = true;
-    });
     builder.addCase(
-      getWeatherByCoords.fulfilled,
-      (state: State, action: PayloadAction<WeatherProps>): void => {
-        state.loading = false;
-        state.weather = { ...action.payload };
+      getSummary.fulfilled,
+      (state: State, action: PayloadAction<string>): void => {
+        state.summaryLoading = false;
+        state.weather.summary = action.payload;
       }
     );
   },

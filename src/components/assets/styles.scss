@@ -38,6 +38,10 @@ section {
     margin: $spacing-sm;
     color: $grey;
   }
+
+  p {
+    padding: 0 $spacing-lg;
+  }
 }
 
 /* ANIMATIONS */

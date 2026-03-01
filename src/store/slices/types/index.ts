@@ -6,6 +6,7 @@ export type State = {
   weather: WeatherProps;
   search: string;
   loading: boolean;
+  summaryLoading: boolean;
 };
 
 export type ForecastItem = {
@@ -84,4 +85,5 @@ export type CurrentProps = {
 export type WeatherProps = {
   current: CurrentProps | null;
   forecast: ForecastProps | null;
+  summary: string | null;
 };

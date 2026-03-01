@@ -12,5 +12,5 @@ export type WeatherDataProps = {
     description: string;
     wind_speed: number;
   };
-  forecast: Array<{ dt_txt: Date, temp: number, description: string; }>;
+  forecast: Array<{ dt_txt: string, temp: number, description: string; }>;
 };

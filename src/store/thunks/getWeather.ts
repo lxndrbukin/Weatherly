@@ -5,33 +5,31 @@ import { OPENWEATHER_API_KEY } from '../../keys';
 
 export const getWeather = createAsyncThunk(
   'weather/getWeather',
-  async (city: string) => {
-    const current = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPENWEATHER_API_KEY}&units=metric`
-    );
-    const forecast = await axios.get(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${OPENWEATHER_API_KEY}&units=metric`
-    );
-    return { current: current.data, forecast: forecast.data };
-  }
-);
-
-export const getWeatherByCoords = createAsyncThunk(
-  'weather/getWeatherByCoords',
-  async ({ lat, lon }: CoordsProps) => {
-    const current = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric`
-    );
-    const forecast = await axios.get(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric`
-    );
-    return { current: current.data, forecast: forecast.data };
+  async (data: string | CoordsProps) => {
+    let current;
+    let forecast;
+    if (typeof data === "string") {
+      current = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${data}&appid=${OPENWEATHER_API_KEY}&units=metric`
+      );
+      forecast = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${data}&appid=${OPENWEATHER_API_KEY}&units=metric`
+      );
+    } else {
+      current = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&appid=${OPENWEATHER_API_KEY}&units=metric`
+      );
+      forecast = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${data.lat}&lon=${data.lon}&appid=${OPENWEATHER_API_KEY}&units=metric`
+      );
+    }
+    return { current: current.data, forecast: forecast.data, summary: null };
   }
 );
 
 export const getSummary = createAsyncThunk(
   'weather/getSummary', async (data: WeatherDataProps) => {
-    const response = await axios.post('/api/summary', data);
+    const response = await axios.post('/api/summary', { data });
     return response.data.summary;
   }
 );
