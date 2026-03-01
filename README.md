@@ -23,7 +23,6 @@ A **React weather application** with an **AI-generated natural language summary*
 - React 18 + TypeScript
 - Redux Toolkit
 - SCSS
-- Vite
 
 **Backend (Serverless)**
 - Vercel Serverless Functions (Node.js)
