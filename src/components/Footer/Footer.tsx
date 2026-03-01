@@ -7,6 +7,7 @@ export default function Footer(): JSX.Element {
       <a
         className="github"
         target="_blank"
+        rel="noreferrer"
         href="https://github.com/lxndrbukin/Weatherly"
       >
         <i className="fa-brands fa-github"></i>
