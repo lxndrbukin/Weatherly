@@ -13,15 +13,15 @@ export default function Footer(): JSX.Element {
       </a>
       <span>
         Created with{' '}
-        <a target="_blank" href="https://react.dev/">
+        <a target="_blank" rel="noreferrer" href="https://react.dev/">
           React
         </a>
         ,{' '}
-        <a target="_blank" href="https://redux-toolkit.js.org/">
+        <a target="_blank" rel="noreferrer" href="https://redux-toolkit.js.org/">
           Redux Toolkit
         </a>{' '}
         &{' '}
-        <a target="_blank" href="https://openweathermap.org/api">
+        <a target="_blank" rel="noreferrer" href="https://openweathermap.org/api">
           OpenWeather API
         </a>
       </span>
