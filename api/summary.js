@@ -1,9 +1,8 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
 import OpenAI from "openai";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-export default async function summary(req: VercelRequest, res: VercelResponse) {
+export default async function summary(req, res) {
   try {
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Method not allowed' });
