@@ -6,7 +6,7 @@ import Header from './Header/Header';
 import CurrentWeather from './CurrentWeather/CurrentWeather';
 import { Forecast } from './Forecast/Forecast';
 import Footer from './Footer/Footer';
-import Summary from './Summary/Summary';
+// import Summary from './Summary/Summary';
 
 export default function App(): JSX.Element {
   const { loading, weather } = useSelector((state: RootState) => state.weatherData);
@@ -37,7 +37,7 @@ export default function App(): JSX.Element {
       <Header />
       {loading && currentWeather()}
       {loading && forecast()}
-      <Summary />
+      {/* <Summary /> */}
       <Footer />
     </div>
   );
